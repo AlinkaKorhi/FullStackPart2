@@ -1,12 +1,11 @@
 const Total = (props) => {
-    let sum = 0;
-    props.parts.forEach(elem => {
-      sum += elem.exercises;
-    });
+  let partData = props.parts;
+
+  let sum = partData.reduce((s, p) => s+p.exercises, 0);
   
-    return(
-      <p style={{'fontWeight': "bold"}}>Total: {sum}</p>
-    )
+  return(
+    <p style={{'fontWeight': "bold"}}>Total: {sum}</p>
+  )
   }
 
   export default Total;

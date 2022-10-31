@@ -21,11 +21,7 @@ const App = () => {
         exercises: 14
       },
       {
-        name: 'State of a component 2',
-        exercises: 14
-      },
-      {
-        name: 'State of a component 2',
+        name: 'State of a component',
         exercises: 14
       }
     ]
