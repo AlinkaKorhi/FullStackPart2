@@ -5,7 +5,7 @@ const Total = (props) => {
     });
   
     return(
-      <p>Number of exercises {sum}</p>
+      <p style={{'fontWeight': "bold"}}>Total: {sum}</p>
     )
   }
 
