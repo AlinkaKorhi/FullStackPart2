@@ -1,11 +1,4 @@
-import React from 'react';
-
-import Header from './Header.js';
-import Content from './Content.js';
-import Total from './Total.js';
-
-const App = () => {
-  const courses = [
+const coursesData = [
     {
       name: 'Half Stack application development',
       id: 1,
@@ -45,25 +38,14 @@ const App = () => {
           name: 'Middlewares',
           exercises: 7,
           id: 2
+        },
+        {
+          name: 'Middlewares 2',
+          exercises: 7,
+          id: 3
         }
       ]
     }
   ];
 
-  
-  return (
-    <div>
-      <h1>Web development: course information</h1>   
-
-      <Header course={courses[0].name}/>
-      <Content parts={courses[0].parts}/>
-      <Total parts={courses[0].parts}/>
-      
-      <Header course={courses[1].name}/>
-      <Content parts={courses[1].parts}/>
-      <Total parts={courses[1].parts}/>
-      </div>
-  )
-}
-
-export default App;
+  export default coursesData;

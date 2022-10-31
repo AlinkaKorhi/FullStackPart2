@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import Part from './Part.js'
+import Part from '../Components/Part.js'
 
 const Content = (props) => {
     let prtsContent = props.parts.map((elem, i) => (
