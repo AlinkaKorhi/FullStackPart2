@@ -3,10 +3,14 @@ import Number from './Number'
 
 function App() {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '00000000'}
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setNewFilter] = useState('')
 
   function validatePersonName(name){
     let result = true
@@ -33,7 +37,8 @@ function App() {
     if (validatePersonName(newName)){
       const newNameObj = {
         name : newName,
-        number : newNumber
+        number : newNumber,
+        id: persons.length+1
       }
       setPersons(persons.concat(newNameObj))
     }
@@ -51,10 +56,20 @@ function App() {
   function handleNumberChange(event) {
     setNewNumber(event.target.value)
   }
+  function handleFilterChange(event) {
+    setNewFilter(event.target.value)
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <form>
+        <div>
+          filter shown with:  
+          <input value={filter} onChange={handleFilterChange}/>
+        </div>
+      </form>
+      <h2>add a new</h2>
       <form onSubmit={addPerson}>
         <div>
           name: 
@@ -69,8 +84,8 @@ function App() {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map((person, i) => 
-          <Number key={i} name={person.name} number={person.number}/>
+        {persons.filter(personF => personF.name.includes(filter)).map(person => 
+          <Number key={person.id} name={person.name} number={person.number}/>
         )}
       </ul>
     </div>
