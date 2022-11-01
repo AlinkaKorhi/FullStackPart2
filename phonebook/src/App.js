@@ -3,9 +3,10 @@ import Number from './Number'
 
 function App() {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '00000000'}
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
   function validatePersonName(name){
     let result = true
@@ -19,9 +20,20 @@ function App() {
   function addPerson(event) {
     event.preventDefault()
 
+    if (newName == ''){
+      alert(`Field name must be a filled`);
+      return
+    }
+
+    if (newNumber == ''){
+      alert(`Field number must be a filled`);
+      return
+    }
+
     if (validatePersonName(newName)){
       const newNameObj = {
-        name : newName
+        name : newName,
+        number : newNumber
       }
       setPersons(persons.concat(newNameObj))
     }
@@ -30,10 +42,14 @@ function App() {
     }
     
     setNewName('')
+    setNewNumber('')
   }
 
   function handleNameChange(event) {
     setNewName(event.target.value)
+  }
+  function handleNumberChange(event) {
+    setNewNumber(event.target.value)
   }
 
   return (
@@ -44,6 +60,9 @@ function App() {
           name: 
           <input value={newName} onChange={handleNameChange}/>
         </div>
+        <div>number: 
+          <input value={newNumber} onChange={handleNumberChange}/>
+        </div>
         <div>
           <button type="submit">add</button>
         </div>
@@ -51,7 +70,7 @@ function App() {
       <h2>Numbers</h2>
       <ul>
         {persons.map((person, i) => 
-          <Number key={i} name={person.name} />
+          <Number key={i} name={person.name} number={person.number}/>
         )}
       </ul>
     </div>

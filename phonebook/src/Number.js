@@ -2,7 +2,7 @@ function Number(props) {
 
     return (
         <li>
-          {props.name}
+          {props.name} has {props.number} number
         </li>
       )
 }
