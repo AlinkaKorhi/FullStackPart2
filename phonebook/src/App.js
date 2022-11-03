@@ -47,7 +47,7 @@ function App() {
       const newNameObj = {
         name : newName,
         number : newNumber,
-        id: persons.length+1
+        id: persons[persons.length-1].id + 1
       }
 
       personsService.createNew(newNameObj)
@@ -70,7 +70,16 @@ function App() {
     setNewNumber(event.target.value)
   }
   function handleFilterChange(event) {
-      setNewFilter(event.target.value)
+    setNewFilter(event.target.value)
+  }
+  function handleDeleteNumber(event){
+    if (window.confirm("Do you really want to delete number?")) {
+      personsService
+      .deleteObj(event.target.id)
+      .then(response => {
+        getPersonFromServer()
+      })
+    }  
   }
 
   return (
@@ -85,10 +94,14 @@ function App() {
         newNumber={newNumber}
         handleNumberChange={(event) => handleNumberChange(event)}
         addPerson={(event) => addPerson(event)}
-        />
+      />
       
       <h2>Numbers</h2>
-      <Persons persons={persons.filter(personF => personF.name.includes(filter))} onChange={handleFilterChange}/>      
+      <Persons 
+        persons={persons.filter(personF => personF.name.includes(filter))} 
+        onChange={handleFilterChange}
+        deleteNumberProps={handleDeleteNumber}
+      />      
     </div>
   )
 }

@@ -9,4 +9,8 @@ function createNew(newObj){
     return axios.post(baseUrl, newObj)
 }
 
-export default {getAll, createNew}
+function deleteObj(objId){
+    return axios.delete(baseUrl+'/'+objId, objId)
+}
+
+export default {getAll, createNew, deleteObj}
