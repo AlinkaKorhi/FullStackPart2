@@ -50,6 +50,11 @@ function App() {
         number : newNumber,
         id: persons.length+1
       }
+
+      axios
+        .post('http://localhost:3001/persons', newNameObj)
+        .catch(err => {alert(`${newName} cant added to server`)})
+
       setPersons(persons.concat(newNameObj))
     }
     else{
