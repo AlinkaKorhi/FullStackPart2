@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import personsService from './services/personsService.js'
 import Persons from './Persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
@@ -12,11 +12,10 @@ function App() {
 
   function getPersonFromServer(){
     const eventHandler = response => {
-      console.log('promise fulfilled')
       setPersons(response.data)
     }
 
-    const promise = axios.get('http://localhost:3001/persons')
+    const promise = personsService.getAll()
     promise.then(eventHandler)
   }
 
@@ -51,8 +50,7 @@ function App() {
         id: persons.length+1
       }
 
-      axios
-        .post('http://localhost:3001/persons', newNameObj)
+      personsService.createNew(newNameObj)
         .catch(err => {alert(`${newName} cant added to server`)})
 
       setPersons(persons.concat(newNameObj))
