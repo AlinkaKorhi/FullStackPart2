@@ -73,7 +73,9 @@ function App() {
     setNewFilter(event.target.value)
   }
   function handleDeleteNumber(event){
-    if (window.confirm("Do you really want to delete number?")) {
+    let personById = persons.find(elem => elem.id == event.target.id)
+    console.log(personById)
+    if (window.confirm(`Do you really want to delete ${personById.name}?`)) {
       personsService
       .deleteObj(event.target.id)
       .then(response => {
