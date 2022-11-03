@@ -56,7 +56,25 @@ function App() {
       setPersons(persons.concat(newNameObj))
     }
     else{
-      alert(`${newName} is already added to phonebook`);
+      let confirmresult = window.confirm(`${newName} is already added to phonebook, replace the old number to a new one?`);
+      
+      if (confirmresult){
+        let updateObj = persons.find(elem => elem.name == newName);
+        updateObj.number = newNumber;
+          
+        personsService.updateObj(updateObj.id,updateObj)
+          .catch(err => {alert(`${newName} cant updated in server`)})
+  
+        setPersons(persons.map((elem)=>{
+          if (elem.id == updateObj.id) {
+            return {name:elem.name, number:newNumber, id:elem.id}
+          }
+          else{
+            return elem
+          }
+        }))
+      }
+
     }
     
     setNewName('')
@@ -74,7 +92,6 @@ function App() {
   }
   function handleDeleteNumber(event){
     let personById = persons.find(elem => elem.id == event.target.id)
-    console.log(personById)
     if (window.confirm(`Do you really want to delete ${personById.name}?`)) {
       personsService
       .deleteObj(event.target.id)

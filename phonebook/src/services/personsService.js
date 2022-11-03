@@ -13,4 +13,8 @@ function deleteObj(objId){
     return axios.delete(baseUrl+'/'+objId, objId)
 }
 
-export default {getAll, createNew, deleteObj}
+const updateObj = (objId, newObj) => {
+    return axios.put(`${baseUrl}/${objId}`, newObj)
+  }
+
+export default {getAll, createNew, deleteObj, updateObj}
