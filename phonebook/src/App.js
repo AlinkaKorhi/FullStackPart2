@@ -3,16 +3,23 @@ import personsService from './services/personsService.js'
 import Persons from './Persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
+import Notification from './Notification'
 
 function App() {
+  const defaultMessage = '... some messages will be here';
+
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setNewFilter] = useState('')
+  const [message, setMessage] = useState(defaultMessage)
+  const [typeNotification, setTypeNotification] = useState('success')
 
   function getPersonFromServer(){
     const eventHandler = response => {
       setPersons(response.data)
+      setTypeNotification('success')
+      setMessage(defaultMessage)
     }
 
     const promise = personsService.getAll()
@@ -34,12 +41,14 @@ function App() {
     event.preventDefault()
 
     if (newName == ''){
-      alert(`Field name must be a filled`);
+      setTypeNotification('error')
+      setMessage(`Field name must be a filled`);
       return
     }
 
     if (newNumber == ''){
-      alert(`Field number must be a filled`);
+      setTypeNotification('error')
+      setMessage(`Field number must be a filled`);
       return
     }
 
@@ -51,9 +60,15 @@ function App() {
       }
 
       personsService.createNew(newNameObj)
-        .catch(err => {alert(`${newName} cant added to server`)})
+        .catch(err => {
+          setTypeNotification('error')
+          setMessage(`${newName} cant added to server`)
+        })
 
       setPersons(persons.concat(newNameObj))
+
+      setTypeNotification('success')
+      setMessage('New Number was added')
     }
     else{
       let confirmresult = window.confirm(`${newName} is already added to phonebook, replace the old number to a new one?`);
@@ -63,7 +78,10 @@ function App() {
         updateObj.number = newNumber;
           
         personsService.updateObj(updateObj.id,updateObj)
-          .catch(err => {alert(`${newName} cant updated in server`)})
+          .catch(err => {
+            setTypeNotification('error')
+            setMessage(`${newName} cant updated in server`)
+          })
   
         setPersons(persons.map((elem)=>{
           if (elem.id == updateObj.id) {
@@ -73,6 +91,9 @@ function App() {
             return elem
           }
         }))
+
+        setTypeNotification('success')
+        setMessage('Number was updated')
       }
 
     }
@@ -104,6 +125,7 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} type={typeNotification}/>
       <Filter filter={filter} handleClick={(event) => handleFilterChange(event)}/> 
 
       <h2>add a new</h2>
