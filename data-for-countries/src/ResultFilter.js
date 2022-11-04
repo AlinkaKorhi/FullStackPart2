@@ -1,6 +1,16 @@
 import CountryInfo from './CountryInfo'
+import CountryItem from './CountryItem'
 
 function ResultFilter(props){
+    if (props.showOnlyOne !== null){
+        return(
+            <CountryInfo 
+                countryOne={props.showOnlyOne} 
+            />     
+        )
+    }
+
+
     if (props.countriesData.length>10){
         return(
             <div>
@@ -9,11 +19,10 @@ function ResultFilter(props){
         )
     }
     else{
-
         if (props.countriesData.length==1){
             return(
                 <div>
-                    <CountryInfo country={props.countriesData}/>     
+                    <CountryInfo country={props.countriesData} countryOne=''/>     
                 </div>
             ) 
         }
@@ -21,7 +30,12 @@ function ResultFilter(props){
             return(
                 <div>
                     {props.countriesData.map(country => 
-                        <p key={country.name.common}>{country.name.common}</p>
+                        <CountryItem 
+                            key={country.name.common} 
+                            name={country.name.common} 
+                            country={country} 
+                            showCountryInfo={props.showCountryInfo}
+                        />
                     )}        
                 </div>
             ) 

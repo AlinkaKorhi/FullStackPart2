@@ -7,6 +7,8 @@ import ResultFilter from './ResultFilter'
 function App() {
   const [allCountries, setAllCountries] = useState([])
   const [filter, setNewFilter] = useState('')
+  const [showOnlyOneCountryId, setShowOnlyOne] = useState(null)
+  
 
   function getCountriesFromServer(){
     const eventHandler = response => {
@@ -27,13 +29,23 @@ function App() {
   
   function handleFilterChange(event) {
     setNewFilter(event.target.value)
+    setShowOnlyOne(null)
+  }
+
+  function showCountryInfo(event){
+    let countryById = allCountries.find(elem => elem.name.common == event.target.id)
+    setShowOnlyOne(countryById)
   }
 
   return (
     <div>
     <p>find countries</p>
       <Filter filter={filter} handleClick={(event) => handleFilterChange(event)}/>
-      <ResultFilter countriesData={allCountries.filter(elem => elem.name.common.includes(filter))} onChange={handleFilterChange}/>
+      <ResultFilter 
+        countriesData={allCountries.filter(elem => elem.name.common.includes(filter))} 
+        onChange={handleFilterChange}
+        showCountryInfo={showCountryInfo}
+        showOnlyOne={showOnlyOneCountryId}/>
     </div>
   );
 }
